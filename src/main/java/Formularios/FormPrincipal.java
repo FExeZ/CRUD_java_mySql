@@ -15,6 +15,10 @@ public class FormPrincipal extends javax.swing.JFrame {
      */
     public FormPrincipal() {
         initComponents();
+        
+        Clases.CConexion objetoConexion = new Clases.CConexion();
+        
+        objetoConexion.estableceConexion();
     }
 
     /**
