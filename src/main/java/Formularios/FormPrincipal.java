@@ -16,17 +16,15 @@ import javax.swing.JOptionPane;
  *
  * @author Marisa
  */
-
-
-
 public class FormPrincipal extends javax.swing.JFrame {
 
     /**
      * Creates new form FormPrincipal
      */
     public File archivoseleccionado;
+
     public FormPrincipal() {
-        initComponents();   
+        initComponents();
         Clases.CUsuario objetoUsuario = new Clases.CUsuario();
         objetoUsuario.MostrarSexoCombo(cbsexo);
         objetoUsuario.mostrarUsuarios(tbUsuarios);
@@ -234,8 +232,18 @@ public class FormPrincipal extends javax.swing.JFrame {
         });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panel_principalLayout = new javax.swing.GroupLayout(panel_principal);
         panel_principal.setLayout(panel_principalLayout);
@@ -299,7 +307,7 @@ public class FormPrincipal extends javax.swing.JFrame {
         JFileChooser fileChooser = new JFileChooser();
         int result = fileChooser.showOpenDialog(null);
         if (result == JFileChooser.APPROVE_OPTION) {
-            
+
             archivoseleccionado = fileChooser.getSelectedFile();
             txtRutaImagen.setText(archivoseleccionado.getName());
             try {
@@ -307,12 +315,11 @@ public class FormPrincipal extends javax.swing.JFrame {
                 ImageIcon originalicon = new ImageIcon(img);
                 int lblanchura = lblImagen.getWidth();
                 int lblaltura = lblImagen.getHeight();
-                Image scaledImage = originalicon.getImage().getScaledInstance(lblanchura,lblaltura, Image.SCALE_SMOOTH);
+                Image scaledImage = originalicon.getImage().getScaledInstance(lblanchura, lblaltura, Image.SCALE_SMOOTH);
                 lblImagen.setIcon(new ImageIcon(scaledImage));
-                
-                
+
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null,"Error al mostrar imagen");
+                JOptionPane.showMessageDialog(null, "Error al mostrar imagen");
             }
         }
     }//GEN-LAST:event_btExplorarActionPerformed
@@ -320,16 +327,25 @@ public class FormPrincipal extends javax.swing.JFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         Clases.CUsuario objetoUsuario = new Clases.CUsuario();
         objetoUsuario.agregarUsuario(txtNombres, txtApellidos, cbsexo, txtEdad, jDateChooser1, archivoseleccionado);
-        
-        
-        
-        
+        objetoUsuario.mostrarUsuarios(tbUsuarios);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void tbUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbUsuariosMouseClicked
         Clases.CUsuario objetoUsuario = new CUsuario();
         objetoUsuario.seleccionar(tbUsuarios, txtID, txtNombres, txtApellidos, cbsexo, txtEdad, jDateChooser1, lblImagen);
     }//GEN-LAST:event_tbUsuariosMouseClicked
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        Clases.CUsuario objetoUsuario = new CUsuario();
+        objetoUsuario.modificarUsuario(txtID, txtNombres, txtApellidos, cbsexo, txtEdad, jDateChooser1, archivoseleccionado);
+        objetoUsuario.mostrarUsuarios(tbUsuarios);
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        Clases.CUsuario objetoUsuario = new CUsuario();
+        objetoUsuario.eliminarUsuario(txtID);
+        objetoUsuario.mostrarUsuarios(tbUsuarios);
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
