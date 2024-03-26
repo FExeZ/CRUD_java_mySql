@@ -28,6 +28,8 @@ public class FormPrincipal extends javax.swing.JFrame {
         Clases.CUsuario objetoUsuario = new Clases.CUsuario();
         objetoUsuario.MostrarSexoCombo(cbsexo);
         objetoUsuario.mostrarUsuarios(tbUsuarios);
+        txtID.setEditable(false);
+        txtRutaImagen.setEnabled(false);
     }
 
     /**
@@ -328,6 +330,7 @@ public class FormPrincipal extends javax.swing.JFrame {
         Clases.CUsuario objetoUsuario = new Clases.CUsuario();
         objetoUsuario.agregarUsuario(txtNombres, txtApellidos, cbsexo, txtEdad, jDateChooser1, archivoseleccionado);
         objetoUsuario.mostrarUsuarios(tbUsuarios);
+        objetoUsuario.limpiarCampos(txtID, txtNombres, txtApellidos, txtEdad, jDateChooser1, txtRutaImagen, lblImagen);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void tbUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbUsuariosMouseClicked
@@ -339,12 +342,14 @@ public class FormPrincipal extends javax.swing.JFrame {
         Clases.CUsuario objetoUsuario = new CUsuario();
         objetoUsuario.modificarUsuario(txtID, txtNombres, txtApellidos, cbsexo, txtEdad, jDateChooser1, archivoseleccionado);
         objetoUsuario.mostrarUsuarios(tbUsuarios);
+        objetoUsuario.limpiarCampos(txtID, txtNombres, txtApellidos, txtEdad, jDateChooser1, txtRutaImagen, lblImagen);
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         Clases.CUsuario objetoUsuario = new CUsuario();
         objetoUsuario.eliminarUsuario(txtID);
         objetoUsuario.mostrarUsuarios(tbUsuarios);
+        objetoUsuario.limpiarCampos(txtID, txtNombres, txtApellidos, txtEdad, jDateChooser1, txtRutaImagen, lblImagen);
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**

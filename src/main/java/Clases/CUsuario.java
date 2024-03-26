@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -28,30 +29,30 @@ import javax.swing.table.DefaultTableModel;
  * @author Marisa
  */
 public class CUsuario {
-
+    
     int idSexo;
-
+    
     public void establecerIdSexo(int idSexo) {
         this.idSexo = idSexo;
     }
-
+    
     public void MostrarSexoCombo(JComboBox comboSexo) {
-
+        
         Clases.CConexion objetoConexion = new Clases.CConexion();
         String sql = "select * from sexo";
         Statement st;
-
+        
         try {
             st = objetoConexion.estableceConexion().createStatement();
             ResultSet rs = st.executeQuery(sql);
             comboSexo.removeAllItems();
-
+            
             while (rs.next()) {
                 String nombreSexo = rs.getString("sexo");
                 this.establecerIdSexo(rs.getInt("id"));
                 comboSexo.addItem(nombreSexo);
                 comboSexo.putClientProperty(nombreSexo, idSexo);
-
+                
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al mostrar Sexo: " + e.toString());
@@ -59,9 +60,9 @@ public class CUsuario {
             objetoConexion.cerrarConexion();
         }
     }
-
+    
     public void agregarUsuario(JTextField nombres, JTextField apellidos, JComboBox combosexo, JTextField edad, JDateChooser fnacimiento, File foto) {
-
+        
         CConexion objetoConexion = new CConexion();
         String consulta = "insert into usuarios (nombre, apellido, fksexo, edad, fnacimiento, foto) values (?,?,?,?,?,?);";
         try {
@@ -84,7 +85,7 @@ public class CUsuario {
             objetoConexion.cerrarConexion();
         }
     }
-
+    
     public void mostrarUsuarios(JTable tablaTotalUsuarios) {
         Clases.CConexion objetoConexion = new Clases.CConexion();
         DefaultTableModel modelo = new DefaultTableModel();
@@ -96,9 +97,9 @@ public class CUsuario {
         modelo.addColumn("Edad");
         modelo.addColumn("Nacimiento");
         modelo.addColumn("Foto");
-
+        
         tablaTotalUsuarios.setModel(modelo);
-
+        
         sql = "select usuarios.id,usuarios.nombre,usuarios.apellido,sexo.sexo, usuarios.edad,usuarios.fnacimiento,usuarios.foto from usuarios inner join sexo on usuarios.fksexo = sexo.id;";
         try {
             Statement st = objetoConexion.estableceConexion().createStatement();
@@ -121,10 +122,10 @@ public class CUsuario {
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(null, "Error: " + e.toString());
                     }
-
+                    
                     modelo.addRow(new Object[]{id, nombre, apellido, sexo, edad, nuevaFecha, foto});
                 }
-
+                
                 tablaTotalUsuarios.setModel(modelo);
             }
         } catch (Exception e) {
@@ -133,7 +134,7 @@ public class CUsuario {
             objetoConexion.cerrarConexion();
         }
     }
-
+    
     public void seleccionar(JTable totalUsuarios, JTextField id, JTextField nombre, JTextField apellido, JComboBox sexo, JTextField edad, JDateChooser fnacimiento, JLabel foto) {
         int fila = totalUsuarios.getSelectedRow();
         if (fila >= 0) {
@@ -157,9 +158,9 @@ public class CUsuario {
                 JOptionPane.showMessageDialog(null, "Error: " + e.toString());
             }
         }
-
+        
     }
-
+    
     public void modificarUsuario(JTextField id, JTextField nombres, JTextField apellidos, JComboBox combosexo, JTextField edad, JDateChooser fnacimiento, File foto) {
         CConexion objetoConexion = new CConexion();
         String consulta = "update usuarios set usuarios.nombre=?, usuarios.apellido=?, usuarios.fksexo=?,usuarios.edad=?,usuarios.fnacimiento=?,usuarios.foto=? where usuarios.id=?";
@@ -184,7 +185,7 @@ public class CUsuario {
             objetoConexion.cerrarConexion();
         }
     }
-
+    
     public void eliminarUsuario(JTextField id) {
         CConexion objetoConexion = new CConexion();
         String consulta = "delete from usuarios where usuarios.id=?;";
@@ -198,5 +199,16 @@ public class CUsuario {
         } finally {
             objetoConexion.cerrarConexion();
         }
+    }
+    
+    public void limpiarCampos(JTextField id, JTextField nombre, JTextField apellido, JTextField edad, JDateChooser nacimiento, JTextField rutaImagen, JLabel imagenContenido) {
+        id.setText("");
+        nombre.setText("");
+        apellido.setText("");
+        edad.setText("");
+        Calendar calendario = Calendar.getInstance();
+        nacimiento.setDate(calendario.getTime());
+        rutaImagen.setText("");
+        imagenContenido.setIcon(null);
     }
 }
