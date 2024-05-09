@@ -23,11 +23,11 @@ import javax.swing.JTextField;
 public class CConexion {
 
     Connection conectar = null;
-    String usuario = "root";
-    String contraseña = "";
-    String bd = "bdusuarios";
-    String ip = "localhost";
-    String puerto = "3306";
+    String usuario = "MyUser";
+    String contraseña = "MyPassword";
+    String bd = "MyDBName";
+    String ip = "MyIPHost";
+    String puerto = "MyPort";
     String cadena = "jdbc:mysql://" + ip + ":" + puerto + "/" + bd;
 
     public Connection estableceConexion() {
