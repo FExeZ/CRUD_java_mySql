@@ -12,10 +12,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Marisa
- */
 public class FormPrincipal extends javax.swing.JFrame {
 
     /**
